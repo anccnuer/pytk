@@ -1,0 +1,23 @@
+name: Build Executable
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install Nuitka
+      run: |
+        python -m pip install nuitka
+
+    - name: Build executable
+      run: |
+        nuitka --standalone --mingw64 app.py
