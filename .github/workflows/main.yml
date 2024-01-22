@@ -17,7 +17,9 @@ jobs:
     - name: Install Nuitka
       run: |
         python -m pip install nuitka
-
+    - name: List files
+      run: |
+        ls -la
     - name: Build executable
       run: |
         python -m nuitka --standalone --mingw64 app.py
