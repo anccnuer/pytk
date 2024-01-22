@@ -20,4 +20,4 @@ jobs:
 
     - name: Build executable
       run: |
-        nuitka --standalone --mingw64 app.py
+        python -m nuitka --standalone --mingw64 app.py
