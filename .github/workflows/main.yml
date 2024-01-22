@@ -1,25 +1,33 @@
-name: Build Executable
+name: Python application 
 
 on:
   push:
-    branches: [ main ]
-
+    branches:
+      - main  # Or the default branch of your repository 
+    
 jobs:
   build:
+  
     runs-on: ubuntu-latest
 
     steps:
+    - uses: actions/checkout@v2
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.x'
+        python-version: 3.x
 
-    - name: Install Nuitka
+    - name: Install dependencies
       run: |
-        python -m pip install nuitka
-    - name: List files
-      run: |
-        ls -la
-    - name: Build executable
+        python -m pip install --upgrade pip
+        pip install nuitka 
+
+    - name: Compile with Nuitka
       run: |
         python -m nuitka --standalone --mingw64 app.py
+      
+    - name: Upload the artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: compiled_exe
+        path: ./app.dist  # .dist is a default Nuitka output directory
